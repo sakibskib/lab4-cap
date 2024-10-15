@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import './App.css'
 import APIForm from './components/APIForm'
+import Gallery from './components/Gallery';
 const ACCESS_KEY = import.meta.env.VITE_APP_ACCESS_KEY;
 
 function App() {
 const [currentImage, setCurrentImage] = useState(null);
+const [prevImages, setPrevImages] = useState([]);
 
   const [inputs, setInputs] = useState({
     url: "",
@@ -23,6 +25,7 @@ const [currentImage, setCurrentImage] = useState(null);
         }
     else {
       setCurrentImage(json.url);
+      setPrevImages((images) => [...images, json.url]);
       reset();
     }
   }
@@ -108,6 +111,10 @@ const reset= () => {
     &no_ads={inputs.no_ads}
     <br></br>
   </p>
+
+  <div className='container'>
+    <Gallery images={prevImages} />
+  </div>
 </div>
 
 <br></br>
